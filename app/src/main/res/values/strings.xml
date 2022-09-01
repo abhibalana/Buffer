@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Buffer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notification">notification</string>
+    <string name="enable_notification">Notification</string>
+    <string name="library_key">Library</string>
+    <string name="library_value">Libraries</string>
+    <string name="privacy_policy">Privacy Policies</string>
+    <string name="privacy_key">privacy</string>
+    <string name="terms_key">Terms</string>
+    <string name="terms">Terms&amp;conditions</string>
+    <string name="logout_key">logout</string>
+    <string name="logout">Logout</string>
+    <string name="general">General</string>
+    <string name="Security">Security</string>
+</resources>
