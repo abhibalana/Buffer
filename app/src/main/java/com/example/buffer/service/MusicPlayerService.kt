@@ -148,6 +148,7 @@ class MusicPlayerService : Service() {
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build()
+
             manager.notify(0,notification)
         }
         else{
@@ -270,7 +271,6 @@ class MusicPlayerService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cancelNotification()
         mediaPlayer.release()
     }
     fun restart(){

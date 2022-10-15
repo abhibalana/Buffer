@@ -13,7 +13,7 @@ class constant {
             "https://abhibalana.github.io/TermsAndCondition/"
         const val privacy="https://www.privacypolicygenerator.info/live.php?token=090vXmG2LNEQxC9QCbSnkXEfra1dJthH"
 
-        const val api_key="f6f945a136msh12fe8e7e1a5cb63p15078djsned6733bc1c7a"
+
 
         const val playlist1="https://soundcloud.com/abhishek-balana/sets/top-50-country"
         const val playlist2="https://soundcloud.com/abhishek-balana/sets/top-50-hip-hop-rap"
