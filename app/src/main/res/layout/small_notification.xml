@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    tools:layout_height="60dp"
+    >
+
+    <ImageView
+        android:id="@+id/imgWidgetAlbumArt"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splashbuffer" />
+
+    <FrameLayout
+        android:id="@+id/frame_close"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/btnWidgetCloseService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/imgWidgetAlbumArt"
+        android:layout_toStartOf="@+id/layout_controls"
+        android:layout_centerVertical="true"
+        >
+
+        <TextView
+            android:id="@+id/lblWidgetCurrentMusicName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:singleLine="true"
+            tools:text="@string/app_name"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            />
+
+        <TextView
+            android:id="@+id/lblWidgetCurrentArtistName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:singleLine="true"
+            tools:text="@string/app_name"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        >
+
+        <FrameLayout
+            android:id="@+id/button_play_last"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            >
+
+            <ImageButton
+                android:id="@+id/btnWidgetPlayPrevious"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/ic_baseline_skip_previous_24"
+                android:layout_gravity="center"
+                android:background="@null"
+                />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/button_play_pause"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            >
+
+            <ImageButton
+                android:id="@+id/btnWidgetPlayPauseMusic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/ic_baseline_pause_24"
+                android:layout_gravity="center"
+                android:background="@null"
+                />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/button_play_next"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            >
+
+            <ImageButton
+                android:id="@+id/btnWidgetPlayNext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/ic_baseline_skip_next_24"
+                android:layout_gravity="center"
+                android:background="@null"
+                />
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>
