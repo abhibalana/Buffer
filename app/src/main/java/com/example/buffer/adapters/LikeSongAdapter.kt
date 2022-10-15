@@ -17,8 +17,13 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class LikeSongAdapter(val listener:OnClickLikeSong):RecyclerView.Adapter<LikeSongViewHolder>(){
     var lsongs = ArrayList<ItemsItem>()
+    var listType=""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeSongViewHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.like_songs,parent,false)
+        var view =  LayoutInflater.from(parent.context).inflate(R.layout.like_songs,parent,false)
+        if(listType=="noLike"){
+             view =  LayoutInflater.from(parent.context).inflate(R.layout.search_song_layout,parent,false)
+        }
+
         val viewHolder = LikeSongViewHolder(view)
         view.setOnClickListener {
             listener.onLikeSongClicked(lsongs.get(viewHolder.adapterPosition))
@@ -29,22 +34,25 @@ class LikeSongAdapter(val listener:OnClickLikeSong):RecyclerView.Adapter<LikeSon
 
     override fun onBindViewHolder(holder: LikeSongViewHolder, position: Int) {
         holder.title.text = lsongs.get(position).title
-        Glide.with(holder.image.context).load(lsongs.get(position).artworkUrl).into(holder.image)
+        holder.publisher.text = lsongs.get(position).publisher?.artist
+        Glide.with(holder.image.context).load(lsongs.get(position).artworkUrl).placeholder(R.drawable.splashbuffer).into(holder.image)
     }
 
     override fun getItemCount(): Int {
         return lsongs.size
     }
     @SuppressLint("NotifyDataSetChanged")
-    fun updateArray(songs:ArrayList<ItemsItem>){
+    fun updateArray(songs:ArrayList<ItemsItem>,listType:String){
         lsongs.clear()
         lsongs.addAll(songs)
+        this.listType=listType
         notifyDataSetChanged()
     }
 }
 class LikeSongViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     val image = itemView.findViewById<ImageView>(R.id.songImage)
     val title = itemView.findViewById<TextView>(R.id.songName)
+    val publisher = itemView.findViewById<TextView>(R.id.publisherName)
 }
 interface OnClickLikeSong{
    fun  onLikeSongClicked(item:ItemsItem)

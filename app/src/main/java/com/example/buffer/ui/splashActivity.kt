@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import com.example.buffer.Models.ItemsItem
 import com.example.buffer.R
 import com.example.buffer.authentication.LoginActivity
 import com.example.buffer.authentication.welcomeActivity
@@ -25,6 +26,8 @@ class splashActivity : AppCompatActivity() {
          }
             else{
                 pref.write("FirstLogin","yes")
+             pref.writeArrayList("SearchList", ArrayList<ItemsItem>())
+             pref.writeArrayList("RecentList",ArrayList<ItemsItem>())
              startActivity(Intent(this,welcomeActivity::class.java))
              finish()
          }

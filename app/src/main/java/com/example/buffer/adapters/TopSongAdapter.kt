@@ -22,7 +22,7 @@ class TopSongAdapter(val context: Context ,val listener:onItemClick): RecyclerVi
         val view = LayoutInflater.from(parent.context).inflate(R.layout.top_song_layout,parent,false)
         val topSongView = TopSongViewHolder(view)
         view.setOnClickListener {
-            listener.onMusicItemClick(songs[0].tracks?.items?.get(topSongView.adapterPosition)!!)
+            listener.onMusicItemClick(songs[0].tracks?.items?.get(topSongView.adapterPosition)!!,songs[0])
         }
         return topSongView
     }

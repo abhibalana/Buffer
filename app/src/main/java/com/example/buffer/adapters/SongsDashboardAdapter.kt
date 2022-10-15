@@ -22,7 +22,7 @@ class SongsDashboardAdapter(val context: Context ,val listener:onItemClick): Rec
        val view =  LayoutInflater.from(parent.context).inflate(R.layout.song_layout,parent,false)
        val viewHolder = SongViewHolder(view)
         view.setOnClickListener {
-            listener.onMusicItemClick(songs[0].tracks?.items?.get(viewHolder.adapterPosition)!!)
+            listener.onMusicItemClick(songs[0].tracks?.items?.get(viewHolder.adapterPosition)!!,songs[0])
         }
      return viewHolder
     }
@@ -53,5 +53,5 @@ class SongViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     val title = itemView.findViewById<TextView>(R.id.newSongTitle)
 }
 interface onItemClick{
-    fun onMusicItemClick(item:ItemsItem)
+    fun onMusicItemClick(item:ItemsItem,topsong:TopSongs)
 }

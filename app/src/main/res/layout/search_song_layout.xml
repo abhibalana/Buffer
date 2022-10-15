@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="10dp"
-
     android:background="@drawable/rectangle"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +27,20 @@
             android:textSize="16sp"
             android:text="Hello"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="6dp"
-            android:maxLines="2"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+        <TextView
+            android:id="@+id/publisherName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/songImage"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="10dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/songName"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
             android:ellipsize="end"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

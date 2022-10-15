@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.buffer.Models.ItemsItem
@@ -15,6 +16,7 @@ import com.example.buffer.R
 import com.example.buffer.adapters.LikeSongAdapter
 import com.example.buffer.adapters.OnClickLikeSong
 import com.example.buffer.firebase.LikeSongDao
+import com.example.buffer.ui.MainActivity
 import com.example.buffer.ui.MusicPlayActivity
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -22,8 +24,10 @@ import kotlinx.android.synthetic.main.fragment_library.view.*
 
 
 class fragment_library : Fragment(), OnClickLikeSong {
-
 private lateinit var adapter: LikeSongAdapter
+    private lateinit var dao: LikeSongDao
+    var likes :ArrayList<ItemsItem> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,13 +41,16 @@ private lateinit var adapter: LikeSongAdapter
         val name = FirebaseAuth.getInstance().currentUser!!.displayName
         val s = name!!.split(" ")
 
+
         val view =  inflater.inflate(R.layout.fragment_library, container, false)
         (activity as AppCompatActivity).supportActionBar?.hide()
         view.LikeSongs.text = s[0]+","
         view.LikeSongsrecycler.layoutManager= LinearLayoutManager(activity)
         adapter= LikeSongAdapter(this)
 
+
         setUpRecylerView()
+
 
     return view;
     }
@@ -56,9 +63,11 @@ private lateinit var adapter: LikeSongAdapter
            if(it.isSuccessful){
                val likesongs = it.getResult().toObject(LikeModelClass::class.java)!!
                if(likesongs.LikeSongs.size!=0){
+                   likes.clear()
+                   likes.addAll(likesongs.LikeSongs)
                    view?.nolike?.visibility=View.GONE
                    view?.noliketext?.visibility=View.GONE
-                   adapter.updateArray(likesongs.LikeSongs)
+                   adapter.updateArray(likesongs.LikeSongs,"likeSongs")
                    view?.LikeSongsrecycler?.adapter=adapter
                }
            }
@@ -70,7 +79,16 @@ private lateinit var adapter: LikeSongAdapter
 
         val intent = Intent(activity, MusicPlayActivity::class.java)
         intent.putExtra("song",item)
+        intent.putParcelableArrayListExtra("liked",likes)
+        intent.putExtra("listType","likeList")
         startActivity(intent)
     }
+
+    override fun onResume() {
+        super.onResume()
+        setUpRecylerView()
+    }
+
+
 
 }

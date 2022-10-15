@@ -100,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
                 val likeSong = LikeModelClass(user.uid)
                 val dao = LikeSongDao()
                 dao.createSongList(likeSong)
+
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {

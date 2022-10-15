@@ -9,17 +9,21 @@ import android.preference.PreferenceScreen
 import androidx.annotation.RequiresApi
 import com.example.buffer.R
 import com.example.buffer.authentication.LoginActivity
+import com.example.buffer.helper.SharedPrefrenceService
 import com.example.buffer.ui.webviewActivity
 import com.google.firebase.auth.FirebaseAuth
 
 
 @Suppress("DEPRECATION")
 class fragment_settings : PreferenceFragment() {
-
+  private lateinit var pref:SharedPrefrenceService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.settings)
+        pref = SharedPrefrenceService()
+        pref.init(activity)
+
 
 
     }
@@ -37,6 +41,7 @@ class fragment_settings : PreferenceFragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                pref.write("isPlaying","false")
                 startActivity(intent)
                 activity.finish()
 

@@ -7,12 +7,16 @@
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1245" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.136" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.136" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_history_24.xml" value="0.133" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.136" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.133" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.133" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.136" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1245" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/ic_baseline_settings_applications_24.xml" value="0.1245" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/rectangle.xml" value="0.136" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/drawable/roundrect.xml" value="0.1245" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/activity_history.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/activity_music_play.xml" value="0.22826086956521738" />
@@ -28,8 +32,11 @@
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/fragment_search.xml" value="0.2" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/fragment_settings.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/like_songs.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/notification.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/recent_search_song.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/search_song_layout.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/slider_dashboard.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/small_notification.xml" value="0.20427350427350427" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/song_layout.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/layout/top_song_layout.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/abhib/AndroidStudioProjects/Buffer/app/src/main/res/menu/action_bar_menu.xml" value="0.25" />

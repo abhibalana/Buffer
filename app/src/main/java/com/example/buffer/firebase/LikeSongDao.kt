@@ -3,6 +3,7 @@ package com.example.buffer.firebase
 import android.util.Log
 import com.example.buffer.Models.ItemsItem
 import com.example.buffer.Models.LikeModelClass
+import com.example.buffer.helper.constant
 import com.google.android.gms.tasks.OnCompleteListener
 
 import com.google.android.gms.tasks.Task
@@ -13,11 +14,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import org.checkerframework.common.value.qual.EnsuresMinLenIf
 
 class LikeSongDao {
     val likedao = FirebaseFirestore.getInstance()
     val collection = likedao.collection("UserLikeSongs")
-    var list = ArrayList<ItemsItem>()
+
+
+
     fun createSongList(likeModelClass: LikeModelClass){
         likeModelClass?.let {
             GlobalScope.launch(Dispatchers.IO) {
@@ -48,19 +52,21 @@ class LikeSongDao {
         }
     }
 
-    fun containsSong(uid:String):ArrayList<ItemsItem>{
-       collection.document(uid).get().addOnCompleteListener { it ->
-          if(it.isSuccessful){
-              val result = it.result
-              result.let {
-                  val res = result.toObject(LikeModelClass::class.java)
-                  list.clear()
-                  list.addAll(res!!.LikeSongs)
-              }
-          }
-      }
-return list
-    }
+    fun getLikeSongList(uid: String){
+        GlobalScope.launch {
+            try {
+                val list1 = getListById(uid).await().toObject(LikeModelClass::class.java)!!
+                constant.likeSong.clear()
+                constant.likeSong.addAll(list1.LikeSongs)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+            }
+        }
+
+
+
+
 
     fun getListById(uid: String): Task<DocumentSnapshot> {
         return collection.document(uid).get()

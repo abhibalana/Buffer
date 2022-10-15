@@ -16,20 +16,21 @@ import com.example.buffer.R
 import com.example.buffer.Repository.AllSongCategoryRep
 import com.example.buffer.ViewModels.MainViewModel
 import com.example.buffer.ViewModels.MyViewModelFactory
-import com.example.buffer.adapters.OnSearchSongClicked
-import com.example.buffer.adapters.SearchSongAdapter
+import com.example.buffer.adapters.*
+import com.example.buffer.helper.SharedPrefrenceService
 import com.example.buffer.service.RetrofitService
 import com.example.buffer.ui.MusicPlayActivity
-import kotlinx.android.synthetic.main.activity_music_play.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
-class fragment_search : Fragment(), OnSearchSongClicked {
+class fragment_search : Fragment(), OnSearchSongClicked, RecentSearchInterface {
 
 
     lateinit var viewModel: MainViewModel
     private val retrofitService = RetrofitService.getInstance()
+    private lateinit var pref:SharedPrefrenceService
     private lateinit var searchSongAdapter:SearchSongAdapter
+    private lateinit var recentSeachAdapter: RecentSeachAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,8 +42,14 @@ class fragment_search : Fragment(), OnSearchSongClicked {
     ): View? {
         // Inflate the layout for this fragment
         val view =inflater.inflate(R.layout.fragment_search, container, false)
+        pref= SharedPrefrenceService()
+        pref.init(requireContext())
         searchSongAdapter = SearchSongAdapter(this)
+        recentSeachAdapter= RecentSeachAdapter(this)
         view.searchSongRecyclerView.layoutManager = LinearLayoutManager(activity)
+        val recentSearch = pref.getArrayList("SearchList","No")
+        recentSeachAdapter.updateArray(recentSearch)
+        view?.searchSongRecyclerView?.adapter =recentSeachAdapter
         setHasOptionsMenu(true)
         view.searchview.setOnClickListener {
             (activity as AppCompatActivity).supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.teal_600)))
@@ -64,12 +71,14 @@ class fragment_search : Fragment(), OnSearchSongClicked {
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as AppCompatActivity).supportActionBar?.hide()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.action_bar_menu,menu)
         val searchView = SearchView((activity as AppCompatActivity).supportActionBar?.themedContext!!)
+
 
        menu.findItem(R.id.searchAction).apply {
             setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -107,6 +116,31 @@ class fragment_search : Fragment(), OnSearchSongClicked {
     }
 
     override fun onSongPlayed(item: ItemsItem) {
+        val intent = Intent(activity,MusicPlayActivity::class.java)
+        val list = pref.getArrayList("SearchList","No")
+        val list2 = pref.getArrayList("RecentList","No")
+        if(!list2.contains(item)){
+            list2.add(item)
+            pref.writeArrayList("RecentList",list2)
+        }
+        if(!list.contains(item)) {
+            list.add(item)
+        }
+        pref.writeArrayList("SearchList",list)
+        intent.putExtra("song",item)
+        startActivity(intent)
+    }
+
+
+
+    override fun onDeleteSearch(item: ItemsItem) {
+        val list = pref.getArrayList("SearchList","No")
+        list.remove(item)
+        pref.writeArrayList("SearchList",list)
+        recentSeachAdapter.updateArray(list)
+    }
+
+    override fun onSongClicked(item: ItemsItem) {
         val intent = Intent(activity,MusicPlayActivity::class.java)
         intent.putExtra("song",item)
         startActivity(intent)

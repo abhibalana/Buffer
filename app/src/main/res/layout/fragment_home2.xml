@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_color"
 
     tools:context=".fragmnets.fragment_home">
     <ScrollView
@@ -16,25 +17,34 @@
             android:id="@+id/layout1"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/Wish"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:textSize="22sp"
-                android:textColor="#FB8997"
-                android:textStyle="bold"
+                android:fontFamily="@font/baloo_tamma"
+                android:textColor="#FAECEE"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/history"
+                android:layout_width="30dp"
+                android:layout_height="32dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="-36dp"
+                android:layout_marginRight="60dp"
+                android:src="@drawable/ic_baseline_history_24"/>
 
-                android:fontFamily="sans-serif-light"/>
             <ImageView
                 android:id="@+id/settings"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:layout_gravity="right"
-                android:src="@drawable/ic_baseline_settings_24"
                 android:layout_marginTop="-32dp"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_baseline_settings_24" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/topsongrecyclerview"
@@ -44,32 +54,35 @@
 
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/layout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layout1"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/Top50"
+
+            <LinearLayout
+                android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:textSize="22sp"
-                android:text="Top10"
-                android:textColor="#777676"
-                android:textStyle="bold"
+                android:layout_below="@id/layout1"
+                android:orientation="vertical">
 
-                android:fontFamily="sans-serif-light"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/top50recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/Top50"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo"
+                    android:text="Top10"
+                    android:textColor="#3C3C3C"
+                    android:textSize="22sp"
+
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/top50recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
 
 
-        </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/layout3"
                 android:layout_width="match_parent"
@@ -84,10 +97,10 @@
                     android:layout_marginTop="10dp"
                     android:textSize="22sp"
                     android:text="Pop"
-                    android:textColor="#777676"
+                    android:textColor="#3C3C3C"
                     android:textStyle="bold"
 
-                    android:fontFamily="sans-serif-light"/>
+                    android:fontFamily="@font/archivo"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/poprecyclerview"
                     android:layout_width="match_parent"
@@ -110,10 +123,10 @@
                     android:layout_marginTop="10dp"
                     android:textSize="22sp"
                     android:text="Latin"
-                    android:textColor="#777676"
+                    android:textColor="#3C3C3C"
                     android:textStyle="bold"
 
-                    android:fontFamily="sans-serif-light"/>
+                    android:fontFamily="@font/archivo"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/workoutrecyclerview"
                     android:layout_width="match_parent"
@@ -136,10 +149,10 @@
                     android:layout_marginTop="10dp"
                     android:textSize="22sp"
                     android:text="Audio Books"
-                    android:textColor="#777676"
+                    android:textColor="#3C3C3C"
                     android:textStyle="bold"
 
-                    android:fontFamily="sans-serif-light"/>
+                    android:fontFamily="@font/archivo"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/booksrecyclerview"
                     android:layout_width="match_parent"

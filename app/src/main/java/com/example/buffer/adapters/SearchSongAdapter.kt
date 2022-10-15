@@ -33,7 +33,7 @@ class SearchSongAdapter(val listener:OnSearchSongClicked):RecyclerView.Adapter<S
     }
 
     override fun getItemCount(): Int {
-        return searchList.size
+        return searchList[0].tracks?.items!!.size
     }
     @SuppressLint("NotifyDataSetChanged")
     fun updateArrayList(response: SearchResponse){
