@@ -108,43 +108,43 @@ class fragment_home : Fragment(), onItemClick {
                 view.topsongrecyclerview.adapter=songAdapter
 
         viewModel.topSongs2.observe(this, Observer {
-           // songDashboardAdapter.setArrayList(it)
+           songDashboardAdapter.setArrayList(it)
             view.top50recyclerview.adapter=songDashboardAdapter
 
             viewModel.topSongs3.observe(this, Observer {
-              //  songDashboardAdapter1.setArrayList(it)
+               songDashboardAdapter1.setArrayList(it)
                 view.poprecyclerview.adapter=songDashboardAdapter1
 
                 viewModel.topSongs4.observe(this, Observer {
-                //    songDashboardAdapter2.setArrayList(it)
+                    songDashboardAdapter2.setArrayList(it)
                     view.workoutrecyclerview.adapter=songDashboardAdapter2
 
 
 
 
                     viewModel.topSongs5.observe(this, Observer {
-                  //      songDashboardAdapter3.setArrayList(it)
+                        songDashboardAdapter3.setArrayList(it)
                         view.booksrecyclerview.adapter=songDashboardAdapter3
 
 
                     })
-                   // viewModel.getAllSongCategory(constant.playlist5,"5")
+                    viewModel.getAllSongCategory(constant.playlist5,"5")
 
                 })
-                //viewModel.getAllSongCategory(constant.playlist4,"4")
+                viewModel.getAllSongCategory(constant.playlist4,"4")
 
             })
 
-            //viewModel.getAllSongCategory(constant.playlist3,"3")
+            viewModel.getAllSongCategory(constant.playlist3,"3")
 
 
         })
-       //viewModel.getAllSongCategory(constant.playlist2,"2")
+       viewModel.getAllSongCategory(constant.playlist2,"2")
             })
         viewModel.errorMessage.observe(this, Observer {
             Log.d("Abhishek2" , ""+it)
         })
-     //  viewModel.getAllSongCategory(constant.playlist1,"1")
+       viewModel.getAllSongCategory(constant.playlist1,"1")
 
         return view
     }

@@ -113,6 +113,7 @@ class PlayerActivity : AppCompatActivity() {
                 }
             }
         }
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
             IntentFilter("custom-event-name")
         );
@@ -120,6 +121,7 @@ class PlayerActivity : AppCompatActivity() {
 
     }
     fun playNext(){
+        mMusicPlayerService.stop()
         val rec = pref.getArrayList("RecentList","no")
         val recent = ArrayList<ItemsItem>()
         recent.addAll(rec)
@@ -136,7 +138,7 @@ class PlayerActivity : AppCompatActivity() {
                 MainViewModel::class.java
             )
         viewModel.trackData.observe(this, Observer {
-            mMusicPlayerService.stop()
+
             url = it.audio?.get(0)?.url!!
             pref.write("SongName", song.title.toString())
             pref.write("SongImage", song.artworkUrl.toString())
@@ -242,15 +244,17 @@ class PlayerActivity : AppCompatActivity() {
 
 
 
+
     }
 
     override fun onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
         super.onDestroy()
         if(mBound){
             unbindService(mConnection)
             mBound=false
         }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
 

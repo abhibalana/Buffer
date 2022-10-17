@@ -234,24 +234,17 @@ class MusicPlayActivity : AppCompatActivity() {
 
 
 
-    override fun onStop() {
-        super.onStop()
 
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
 
     override fun onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
 
         super.onDestroy()
         if(mBound){
             unbindService(mConnection)
             mBound=false
         }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
 

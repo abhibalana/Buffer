@@ -5,24 +5,27 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.os.AsyncTask
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-
-import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.Glide
+import com.example.buffer.Models.ItemsItem
 import com.example.buffer.R
+import com.example.buffer.Repository.AllSongCategoryRep
+import com.example.buffer.ViewModels.MainViewModel
+import com.example.buffer.ViewModels.MyViewModelFactory
 import com.example.buffer.helper.SharedPrefrenceService
 import com.example.buffer.helper.constant
 import com.example.buffer.ui.MainActivity
-
 
 
 @Suppress("DEPRECATION")
@@ -30,8 +33,8 @@ class MusicPlayerService : Service() {
     private  val mBinder :Binder = MyServiceBinder()
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var sharedPrefrenceService: SharedPrefrenceService
-    private lateinit var bitmap:Bitmap
     private lateinit var remoteViews: RemoteViews
+
 
     override fun onCreate() {
         Log.d("Abhishek"," oncreate Called")
@@ -42,21 +45,21 @@ class MusicPlayerService : Service() {
 
         mediaPlayer = MediaPlayer()
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        mediaPlayer.setOnCompletionListener {
-            Log.d("Abhishek", " song completed")
-            sharedPrefrenceService.write("isPlaying","false")
-            cancelNotification()
-            stopSelf()
-        }
+
 
 
         mediaPlayer.setOnPreparedListener {
             Log.d("Abhishek"," prepared")
             sharedPrefrenceService.write("isPlaying","true")
-            cancelNotification()
-            showNotification()
-                play()
+            startService(Intent(this,MusicPlayerService::class.java))
 
+                play()
+        }
+        mediaPlayer.setOnCompletionListener {
+            Log.d("Abhishek", " song completed")
+            sharedPrefrenceService.write("isPlaying","false")
+            stopForeground(true)
+            stopSelf()
         }
 
     }
@@ -67,48 +70,53 @@ class MusicPlayerService : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val action = intent?.action
-        when(action){
+        Log.d("Abhishek"," action"+intent?.action+" PLAY "+isPlaying())
+        when(intent?.action){
            constant.MUSIC_SERVICE_ACTION_PAUSE ->{
                if (isPlaying()) {
+                   sharedPrefrenceService.write("isPlaying","false")
                    puause()
                    val intnt = Intent("custom-event-name")
                    intnt.putExtra("Event","pause")
                    LocalBroadcastManager.getInstance(this).sendBroadcast(intnt)
-                   sharedPrefrenceService.write("isPlaying","false")
-                   remoteViews.setImageViewResource(R.id.btnWidgetPlayPauseMusic,R.drawable.ic_baseline_play_arrow_24)
 
                } else {
-                  play()
+                   sharedPrefrenceService.write("isPlaying","true")
+                   play()
                    val intnt = Intent("custom-event-name")
                    intnt.putExtra("Event","play")
                    LocalBroadcastManager.getInstance(this).sendBroadcast(intnt)
-                   remoteViews.setImageViewResource(R.id.btnWidgetPlayPauseMusic,R.drawable.ic_baseline_pause_24)
-                   sharedPrefrenceService.write("isPlaying","true")
-
                }
 
            }
             constant.MUSIC_SERVICE_ACTION_PREV->{
+                sharedPrefrenceService.write("isPlaying","true")
                 restart()
                 val intnt = Intent("custom-event-name")
                 intnt.putExtra("Event","play")
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intnt)
-                remoteViews.setImageViewResource(R.id.btnWidgetPlayPauseMusic,R.drawable.ic_baseline_pause_24)
-                sharedPrefrenceService.write("isPlaying","true")
+
             }
             constant.MUSIC_SERVICE_ACTION_STOP->{
-                stop()
+
                 val intnt = Intent("custom-event-name")
                 intnt.putExtra("Event","pause")
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intnt)
                 sharedPrefrenceService.write("isPlaying","false")
-                cancelNotification()
+                mediaPlayer.stop()
+                stopForeground(true)
+            }
+            constant.MUSIC_SERVICE_ACTION_NEXT->{
+                sharedPrefrenceService.write("isPlaying","false")
+                puause()
+                val intnt = Intent("custom-event-name")
+                intnt.putExtra("Event","pause")
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intnt)
             }
 
         }
-         showNotification()
-        return START_NOT_STICKY
+
+        return START_STICKY
     }
     fun showNotification(){
 
@@ -135,12 +143,8 @@ class MusicPlayerService : Service() {
             )
 
 
-
-
-
-
             val notification: Notification = notificationBuilder.setOngoing(true)
-                .setSmallIcon(com.example.buffer.R.mipmap.ic_launcher3)
+                .setSmallIcon(R.mipmap.ic_launcher3)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomBigContentView(getRemoteViews())
                 .setPriority(NotificationManager.IMPORTANCE_LOW)
@@ -149,7 +153,7 @@ class MusicPlayerService : Service() {
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build()
 
-            manager.notify(0,notification)
+              startForeground(1,notification)
         }
         else{
             Log.d("Abhishek","Notification Doesnt Follow")
@@ -158,8 +162,8 @@ class MusicPlayerService : Service() {
 
     fun getRemoteViews():RemoteViews{
          remoteViews = RemoteViews(packageName,R.layout.notification)
-        setUpRemoteViews(remoteViews)
-        updateRemoteViews(remoteViews)
+         setUpRemoteViews(remoteViews)
+         updateRemoteViews(remoteViews)
         return remoteViews
     }
     fun setUpRemoteViews(remoteViews: RemoteViews){
@@ -192,26 +196,35 @@ class MusicPlayerService : Service() {
     fun updateRemoteViews(remoteViews: RemoteViews){
         val name = sharedPrefrenceService.read("SongName","No")
         val track = sharedPrefrenceService.getTrack("Track","No")
-
+         val url = sharedPrefrenceService.read("SongImage","No")
         remoteViews.setTextViewText(R.id.lblWidgetCurrentMusicName,name)
 
         remoteViews.setTextViewText(R.id.lblWidgetCurrentArtistName,track.publisher?.artist)
+
         if(sharedPrefrenceService.read("isPlaying","No")=="true"){
-           remoteViews.setImageViewResource(R.id.btnWidgetPlayPauseMusic,R.drawable.ic_baseline_pause_24)
+            remoteViews.setImageViewResource(R.id.btnWidgetPlayPauseMusic,R.drawable.ic_baseline_pause_24)
         }
         else{
             remoteViews.setImageViewResource(R.id.btnWidgetPlayPauseMusic,R.drawable.ic_baseline_play_arrow_24)
         }
+    AsyncTask.execute {
+            try {
+                val bitmap = Glide.with(applicationContext)
+                    .asBitmap()
+                    .load(url)
+                    .submit(512, 512)
+                    .get()
+                remoteViews.setImageViewBitmap(R.id.imgWidgetAlbumArt, bitmap)
 
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
 
 
 
     }
-    fun cancelNotification(){
-        val mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        mNotificationManager.cancelAll()
 
-    }
 
 
     override fun onBind(p0: Intent?): IBinder {
@@ -229,13 +242,16 @@ class MusicPlayerService : Service() {
         return mediaPlayer.isPlaying
     }
     fun puause(){
-        cancelNotification()
+       
         showNotification()
         mediaPlayer.pause()
+
+
 
     }
     fun play(){
         try {
+            showNotification()
             mediaPlayer.start()
         }catch (e:Exception){
             e.stackTrace
@@ -253,7 +269,15 @@ class MusicPlayerService : Service() {
     fun stop(){
         mediaPlayer.stop()
         mediaPlayer.reset()
+        stopForeground(true)
 
+    }
+
+    override fun onDestroy() {
+        Log.d("Abhishek","onDestroy called")
+        mediaPlayer.stop()
+        mediaPlayer.release()
+        super.onDestroy()
     }
 
     override fun onRebind(intent: Intent?) {
@@ -269,10 +293,6 @@ class MusicPlayerService : Service() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mediaPlayer.release()
-    }
     fun restart(){
         mediaPlayer.pause()
         mediaPlayer.seekTo(0)
