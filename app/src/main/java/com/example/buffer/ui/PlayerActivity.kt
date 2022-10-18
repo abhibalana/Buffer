@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -94,11 +95,13 @@ class PlayerActivity : AppCompatActivity() {
             dao.updateSongList(song, user.uid)
             if(like){
                 Glide.with(this).load(R.drawable.ic_baseline_favorite_border_24).into(likeSongButton)
+                Toast.makeText(this,"Remove from Likes",Toast.LENGTH_LONG).show()
                 like=false
             }
             else{
                 Glide.with(this).load(R.drawable.ic_baseline_favorite_24).into(likeSongButton)
                 like=true
+                Toast.makeText(this,"Added to Likes",Toast.LENGTH_LONG).show()
             }
         }
 

@@ -34,6 +34,7 @@ class MusicPlayerService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var sharedPrefrenceService: SharedPrefrenceService
     private lateinit var remoteViews: RemoteViews
+    private  var prepare: Boolean = false
 
 
     override fun onCreate() {
@@ -46,21 +47,21 @@ class MusicPlayerService : Service() {
         mediaPlayer = MediaPlayer()
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
 
-
-
-        mediaPlayer.setOnPreparedListener {
-            Log.d("Abhishek"," prepared")
-            sharedPrefrenceService.write("isPlaying","true")
-            startService(Intent(this,MusicPlayerService::class.java))
-
-                play()
-        }
         mediaPlayer.setOnCompletionListener {
             Log.d("Abhishek", " song completed")
             sharedPrefrenceService.write("isPlaying","false")
             stopForeground(true)
             stopSelf()
         }
+
+        mediaPlayer.setOnPreparedListener {
+            Log.d("Abhishek"," prepared")
+            sharedPrefrenceService.write("isPlaying","true")
+            startService(Intent(this,MusicPlayerService::class.java))
+            prepare=true
+            play()
+        }
+
 
     }
 
@@ -254,6 +255,7 @@ class MusicPlayerService : Service() {
             showNotification()
             mediaPlayer.start()
         }catch (e:Exception){
+            Log.d("Abhishek","NotPlayed")
             e.stackTrace
         }
     }
@@ -271,6 +273,10 @@ class MusicPlayerService : Service() {
         mediaPlayer.reset()
         stopForeground(true)
 
+    }
+    fun stop1(){
+        mediaPlayer.stop()
+        stopForeground(true)
     }
 
     override fun onDestroy() {
@@ -291,6 +297,12 @@ class MusicPlayerService : Service() {
             return   mediaPlayer.currentPosition
 
 
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        sharedPrefrenceService.write("isPlaying","false")
+        stop()
     }
 
     fun restart(){

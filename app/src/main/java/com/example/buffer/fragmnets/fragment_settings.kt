@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -59,12 +60,20 @@ class fragment_settings : PreferenceFragment() {
         when(key){
             resources.getString(R.string.logout_key) -> {
                 FirebaseAuth.getInstance().signOut()
+                AsyncTask.execute{
+                    try {
+                        mMusicPlayerService.stop1()
+                    }catch (e:Exception){
+                        e.stackTrace
+                    }
+                }
+
                 val intent = Intent(activity, LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 pref.write("isPlaying","false")
-                mMusicPlayerService.stop()
+
                 startActivity(intent)
                 activity.finish()
 
