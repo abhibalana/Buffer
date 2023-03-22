@@ -58,4 +58,8 @@ class HistoryActivity : AppCompatActivity(), OnClickLikeSong {
         intent.putExtra("listType","likeList")
         startActivity(intent)
     }
+
+    override fun onHeartClicked(item: ItemsItem) {
+        TODO("Not yet implemented")
+    }
 }

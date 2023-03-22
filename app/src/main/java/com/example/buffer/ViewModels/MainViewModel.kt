@@ -17,7 +17,9 @@ class MainViewModel constructor(private val repository: AllSongCategoryRep)  : V
 
     val topSongs = MutableLiveData<TopSongs>()
     val topSongs2 = MutableLiveData<TopSongs>()
-    val errorMessage = MutableLiveData<String>()
+    val errorMessage1 = MutableLiveData<String>()
+    val errorMessage2 = MutableLiveData<String>()
+    val errorMessage3 = MutableLiveData<String>()
     val topSongs3 = MutableLiveData<TopSongs>()
     val topSongs4 = MutableLiveData<TopSongs>()
     val topSongs5 = MutableLiveData<TopSongs>()
@@ -34,8 +36,8 @@ class MainViewModel constructor(private val repository: AllSongCategoryRep)  : V
             }
 
             override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                errorMessage.postValue(t.message)
-                Log.d("Abhishek"," message"+t.message)
+                errorMessage1.postValue(t.message)
+                Log.d("Abhishek"," message NOT LOADED TRACK"+t.message)
             }
 
         })
@@ -53,7 +55,7 @@ class MainViewModel constructor(private val repository: AllSongCategoryRep)  : V
             }
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-             errorMessage.postValue(t.message)
+             errorMessage2.postValue(t.message)
             }
 
         })
@@ -82,7 +84,7 @@ class MainViewModel constructor(private val repository: AllSongCategoryRep)  : V
            }
 
            override fun onFailure(call: Call<TopSongs>, t: Throwable) {
-               errorMessage.postValue(t.message)
+               errorMessage3.postValue(t.message)
            }
 
        })

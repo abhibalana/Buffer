@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.buffer.Models.ItemsItem
+import com.example.buffer.Models.SearchResponse
 import com.example.buffer.R
 import com.example.buffer.Repository.AllSongCategoryRep
 import com.example.buffer.ViewModels.MainViewModel
@@ -31,6 +33,7 @@ class fragment_search : Fragment(), OnSearchSongClicked, RecentSearchInterface {
     private lateinit var pref:SharedPrefrenceService
     private lateinit var searchSongAdapter:SearchSongAdapter
     private lateinit var recentSeachAdapter: RecentSeachAdapter
+    var flag = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -97,8 +100,25 @@ class fragment_search : Fragment(), OnSearchSongClicked, RecentSearchInterface {
                         }
                         else{
                             view?.noDataText?.visibility=View.VISIBLE
+
                         }
                     })
+                    viewModel.errorMessage2.observe(this@fragment_search, Observer {
+
+                        if(it!=null){
+                            view?.searchProgressbar?.visibility = View.GONE
+
+                                Toast.makeText(
+                                    context,
+                                    "Something went wrong",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+
+
+                        }
+                    })
+
                     viewModel.getSearchSong(query)
                 }
                 else{

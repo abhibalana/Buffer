@@ -141,7 +141,7 @@ class fragment_home : Fragment(), onItemClick {
         })
        viewModel.getAllSongCategory(constant.playlist2,"2")
             })
-        viewModel.errorMessage.observe(this, Observer {
+        viewModel.errorMessage3.observe(this, Observer {
             Log.d("Abhishek2" , ""+it)
         })
        viewModel.getAllSongCategory(constant.playlist1,"1")

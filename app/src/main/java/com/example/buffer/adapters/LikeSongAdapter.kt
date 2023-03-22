@@ -14,7 +14,9 @@ import com.example.buffer.Models.LikeModelClass
 import com.example.buffer.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import kotlinx.android.synthetic.main.like_songs.view.*
 
+@Suppress("DEPRECATION")
 class LikeSongAdapter(val listener:OnClickLikeSong):RecyclerView.Adapter<LikeSongViewHolder>(){
     var lsongs = ArrayList<ItemsItem>()
     var listType=""
@@ -26,7 +28,10 @@ class LikeSongAdapter(val listener:OnClickLikeSong):RecyclerView.Adapter<LikeSon
 
         val viewHolder = LikeSongViewHolder(view)
         view.setOnClickListener {
-            listener.onLikeSongClicked(lsongs.get(viewHolder.adapterPosition))
+            listener.onLikeSongClicked(lsongs[viewHolder.adapterPosition])
+        }
+        view.likedSong.setOnClickListener {
+            listener.onHeartClicked(lsongs[viewHolder.adapterPosition])
         }
         return viewHolder
     }
@@ -56,4 +61,5 @@ class LikeSongViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 }
 interface OnClickLikeSong{
    fun  onLikeSongClicked(item:ItemsItem)
+   fun onHeartClicked(item:ItemsItem)
 }
