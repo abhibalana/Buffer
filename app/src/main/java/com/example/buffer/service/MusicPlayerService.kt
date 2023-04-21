@@ -49,16 +49,20 @@ class MusicPlayerService : Service() {
 
         mediaPlayer.setOnCompletionListener {
             Log.d("Abhishek", " song completed")
+
             sharedPrefrenceService.write("isPlaying","false")
-            stopForeground(true)
             stopSelf()
+            stopForeground(true)
+
         }
 
         mediaPlayer.setOnPreparedListener {
             Log.d("Abhishek"," prepared")
             sharedPrefrenceService.write("isPlaying","true")
+
             startService(Intent(this,MusicPlayerService::class.java))
             prepare=true
+
             play()
         }
 

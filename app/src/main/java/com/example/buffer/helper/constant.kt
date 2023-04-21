@@ -12,7 +12,7 @@ class constant {
         const val termsconditionurl =
             "https://abhibalana.github.io/TermsAndCondition/"
         const val privacy="https://www.privacypolicygenerator.info/live.php?token=090vXmG2LNEQxC9QCbSnkXEfra1dJthH"
-        const val api_key="bb67f63ed3msh87061ca4f8b0053p1b6c46jsn210eae5a7c88"
+        const val api_key="8ad833537cmshfb52e7e37393482p1ff93ajsn584bd196e4b6"
 
 
         const val playlist1="https://soundcloud.com/abhishek-balana/sets/top-50-country"

@@ -30,8 +30,10 @@ class LikeSongAdapter(val listener:OnClickLikeSong):RecyclerView.Adapter<LikeSon
         view.setOnClickListener {
             listener.onLikeSongClicked(lsongs[viewHolder.adapterPosition])
         }
-        view.likedSong.setOnClickListener {
-            listener.onHeartClicked(lsongs[viewHolder.adapterPosition])
+        if(listType!="noLike") {
+            view.likedSong.setOnClickListener {
+                listener.onHeartClicked(lsongs[viewHolder.adapterPosition])
+            }
         }
         return viewHolder
     }

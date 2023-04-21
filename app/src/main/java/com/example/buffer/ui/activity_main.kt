@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.*
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import android.view.View
@@ -22,6 +23,7 @@ import com.example.buffer.service.MusicPlayerService
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_music_play.*
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Abhishek", " ServiceConnected")
             val myServiceBinder = p1 as MusicPlayerService.MyServiceBinder
             mMusicPlayerService = myServiceBinder.getService()
+            IntializeSeekBar()
             mBound = true
 
         }
@@ -97,13 +100,13 @@ class MainActivity : AppCompatActivity() {
                 if (mMusicPlayerService.isPlaying()) {
                     prefrenceService.write("isPlaying", "false")
                     mMusicPlayerService.puause()
-
+                    IntializeSeekBar()
                     frameSongPlay.setImageResource(R.drawable.ic_baseline_play_arrow_24)
                 } else {
                     prefrenceService.write("isPlaying", "true")
                     val intent = Intent(this, MusicPlayerService::class.java)
                     startService(intent)
-
+                     IntializeSeekBar()
                     mMusicPlayerService.play()
                     frameSongPlay.setImageResource(R.drawable.ic_baseline_pause_24)
                 }
@@ -139,6 +142,9 @@ class MainActivity : AppCompatActivity() {
     fun checkIsPlaying() {
         if (prefrenceService.read("isPlaying", "No") == "true") {
             frameSongPlay.setImageResource(R.drawable.ic_baseline_pause_24)
+            if(mBound){
+                IntializeSeekBar()
+            }
         } else {
             frameSongPlay.setImageResource(R.drawable.ic_baseline_play_arrow_24)
         }
@@ -155,6 +161,16 @@ class MainActivity : AppCompatActivity() {
             val imgurl = prefrenceService.read("SongImage", "")
             Glide.with(this).load(imgurl).placeholder(R.drawable.splashbuffer).into(frameSongImage)
         }
+    }
+    private fun IntializeSeekBar() {
+        this.runOnUiThread(object : Runnable {
+            override fun run() {
+                bottom_player_seekbar.max = mMusicPlayerService.getDuration()
+                bottom_player_seekbar.progress=mMusicPlayerService.getCurrentPosition()
+                Handler().postDelayed(this, 1000)
+            }
+        })
+
     }
 
 
