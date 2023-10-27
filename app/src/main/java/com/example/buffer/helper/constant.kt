@@ -20,7 +20,7 @@ class constant {
         const val playlist3="https://soundcloud.com/abhishek-balana/sets/top-50-pop"
         const val playlist4="https://soundcloud.com/abhishek-balana/sets/top-50-latin"
         const val playlist5="https://soundcloud.com/abhishek-balana/sets/top-50-audiobooks"
-        const val requestIdToken ="267797881978-ag49fktguv7dcni243jaddgh006fb397.apps.googleusercontent.com"
+        const val requestIdToken =""
         var likeSong = ArrayList<ItemsItem>()
         const val MUSIC_SERVICE_ACTION_NEXT="com.example.buffer.next"
         const val MUSIC_SERVICE_ACTION_PAUSE="com.example.buffer.pause"
