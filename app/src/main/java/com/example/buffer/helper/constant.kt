@@ -15,11 +15,11 @@ class constant {
         const val api_key=""
 
 
-        const val playlist1="https://soundcloud.com/abhishek-balana/sets/top-50-country"
-        const val playlist2="https://soundcloud.com/abhishek-balana/sets/top-50-hip-hop-rap"
-        const val playlist3="https://soundcloud.com/abhishek-balana/sets/top-50-pop"
-        const val playlist4="https://soundcloud.com/abhishek-balana/sets/top-50-latin"
-        const val playlist5="https://soundcloud.com/abhishek-balana/sets/top-50-audiobooks"
+        const val playlist1=""
+        const val playlist2=""
+        const val playlist3=""
+        const val playlist4=""
+        const val playlist5=""
         const val requestIdToken =""
         var likeSong = ArrayList<ItemsItem>()
         const val MUSIC_SERVICE_ACTION_NEXT="com.example.buffer.next"
